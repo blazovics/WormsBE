@@ -13,11 +13,14 @@ public class PlayerHealth : MonoBehaviour
     public Image frontHealthBar;
     public Image backHealthBar;
     public TextMeshProUGUI healthText;
+    public Text playerHealth;
+
     // Start is called before the first frame update
     void Start()
     {
         health = maxHealth;
         frontHealthBar.color = Color.blue;
+        playerHealth.color = Color.blue; 
     }
 
     // Update is called once per frame
@@ -58,6 +61,7 @@ public class PlayerHealth : MonoBehaviour
             frontHealthBar.fillAmount = Mathf.Lerp(fillF, backHealthBar.fillAmount, percentComplete);
         }
         healthText.text = Mathf.Round(health * 100 / maxHealth) + "%";
+        playerHealth.text = health.ToString();
     }
 
     public void TakeDamage(float damage) {
