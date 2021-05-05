@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
+using TMPro;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -9,6 +11,16 @@ public class PlayerMovement : MonoBehaviour
     public Transform currentGun;
     public CharacterController2D controller;
     public Animator animator;
+
+
+    private float health;
+    public float maxHealth = 100;
+    private float lerpTimer;
+    public float chipSpeed = 2f;
+    public Image frontHealthBar;
+    public Image backHealthBar;
+    public TextMeshProUGUI healthText;
+    public Text playerHealth;
 
     public Rigidbody2D rb;
 
@@ -37,6 +49,9 @@ public class PlayerMovement : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        health = maxHealth;
+        frontHealthBar.color = Color.blue;
+        playerHealth.color = Color.blue;
     }
 
     // Update is called once per frame
@@ -55,6 +70,19 @@ public class PlayerMovement : MonoBehaviour
         if (EventSystem.current.IsPointerOverGameObject())
         {
             return;
+        }
+
+
+        health = Mathf.Clamp(health, 0, maxHealth);
+        UpdateHealthUI();
+
+        if (Input.GetKeyDown(KeyCode.A))
+        {
+            TakeDamage(Random.Range(5, 10));
+        }
+        if (Input.GetKeyDown(KeyCode.S))
+        {
+            RestoreHealth(Random.Range(5, 10));
         }
 
 
@@ -159,6 +187,49 @@ public class PlayerMovement : MonoBehaviour
 
         var crossHairPosition = new Vector3(x, y, 0);
         crosshair.transform.position = crossHairPosition;
+    }
+
+
+    public void UpdateHealthUI()
+    {
+
+        float fillF = frontHealthBar.fillAmount;
+        float fillB = backHealthBar.fillAmount;
+        float hFraction = health / maxHealth;
+        if (fillB > hFraction)
+        {
+
+            frontHealthBar.fillAmount = hFraction;
+            backHealthBar.color = Color.red;
+            lerpTimer += Time.deltaTime;
+            float percentComplete = lerpTimer / chipSpeed;
+            percentComplete = percentComplete * percentComplete;
+            backHealthBar.fillAmount = Mathf.Lerp(fillB, hFraction, percentComplete);
+        }
+        if (fillF < hFraction)
+        {
+            backHealthBar.color = Color.green;
+            backHealthBar.fillAmount = hFraction;
+            lerpTimer += Time.deltaTime;
+            float percentComplete = lerpTimer / chipSpeed;
+            percentComplete = percentComplete * percentComplete;
+            frontHealthBar.fillAmount = Mathf.Lerp(fillF, backHealthBar.fillAmount, percentComplete);
+        }
+        healthText.text = Mathf.Round(health * 100 / maxHealth) + "%";
+        playerHealth.text = health.ToString();
+    }
+
+    public void TakeDamage(float damage)
+    {
+
+        health -= damage;
+        lerpTimer = 0f;
+    }
+
+    public void RestoreHealth(float healAmount)
+    {
+        health += healAmount;
+        lerpTimer = 0f;
     }
 
 }

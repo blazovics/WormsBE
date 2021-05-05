@@ -17,6 +17,9 @@ public class CharacterController2D : MonoBehaviour
 	private bool m_FacingRight = true;  // For determining which way the player is currently facing.
 	private Vector3 m_Velocity = Vector3.zero;
 
+	public GameObject canvas;
+
+
 	[Header("Events")]
 	[Space]
 
@@ -31,7 +34,11 @@ public class CharacterController2D : MonoBehaviour
 
 		if (OnLandEvent == null)
 			OnLandEvent = new UnityEvent();
+
+		
 	}
+
+
 
 	private void FixedUpdate()
 	{
@@ -68,12 +75,16 @@ public class CharacterController2D : MonoBehaviour
 			{
 				// ... flip the player.
 				Flip();
+				
+
 			}
 			// Otherwise if the input is moving the player left and the player is facing right...
 			else if (move < 0 && m_FacingRight)
 			{
 				// ... flip the player.
 				Flip();
+				
+
 			}
 		}
 		// If the player should jump...
@@ -93,7 +104,19 @@ public class CharacterController2D : MonoBehaviour
 
 		// Multiply the player's x local scale by -1.
 		Vector3 theScale = transform.localScale;
-		theScale.x *= -1;
+		theScale.x *= -1; 
 		transform.localScale = theScale;
+		Vector3 theScale2 = canvas.transform.localScale;
+		theScale2.x *= -1;
+		canvas.transform.localScale = theScale2;
+		
+
+
+
 	}
+
+
+
+	
+	
 }
