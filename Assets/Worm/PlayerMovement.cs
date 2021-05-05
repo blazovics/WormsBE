@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -8,7 +9,14 @@ public class PlayerMovement : MonoBehaviour
     public Transform currentGun;
     public CharacterController2D controller;
     public Animator animator;
-    SpriteRenderer ren;
+
+    public Rigidbody2D rb;
+
+    public GameObject inventoryUI;
+
+    public GameObject crosshair;
+
+    public float crossHairDistance = 0.1f;
 
     public float runSpeed = 40f;
     public float misileForce = 5;
@@ -20,6 +28,12 @@ public class PlayerMovement : MonoBehaviour
 
     public float targetTime = 60.0f;
 
+
+    void Awake()
+    {
+        Cursor.visible = false;
+    }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -28,6 +42,22 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (Input.GetButtonDown("Inventory"))
+        {
+            inventoryUI.SetActive(!inventoryUI.activeSelf);
+            if (inventoryUI.activeSelf)
+            {
+                Cursor.visible = true;
+            }
+            else { Cursor.visible = false; }
+        }
+
+        if (EventSystem.current.IsPointerOverGameObject())
+        {
+            return;
+        }
+
+
         /*if (!IsTurn)
             return;*/
         targetTime -= Time.deltaTime;
@@ -48,7 +78,8 @@ public class PlayerMovement : MonoBehaviour
         }
         if (movingDone) 
         { 
-            RotateGun(); 
+            RotateGun();
+            Aim();
         }
 
         if (horizontalMove == 0)
@@ -98,6 +129,36 @@ public class PlayerMovement : MonoBehaviour
 
         float rot_z = Mathf.Atan2(diff.y, diff.x) * Mathf.Rad2Deg;
         currentGun.rotation = Quaternion.Euler(0f, 0f, rot_z + 180);
+    }
+
+
+    void Aim()
+    {
+        var worldMousePosition =
+        Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, 0f));
+        var facingDirection = worldMousePosition - rb.transform.position;
+        var aimAngle = Mathf.Atan2(facingDirection.y, facingDirection.x);
+        if (aimAngle < 0f)
+        {
+            aimAngle = Mathf.PI * 2 + aimAngle;
+        }
+
+        // 4
+        var aimDirection = Quaternion.Euler(0, 0, aimAngle * Mathf.Rad2Deg) * Vector2.right;
+
+        SetCrosshairPosition(aimAngle);
+
+
+    }
+
+    private void SetCrosshairPosition(float aimAngle)
+    {
+
+        var x = transform.position.x + crossHairDistance * Mathf.Cos(aimAngle);
+        var y = transform.position.y + crossHairDistance * Mathf.Sin(aimAngle);
+
+        var crossHairPosition = new Vector3(x, y, 0);
+        crosshair.transform.position = crossHairPosition;
     }
 
 }
