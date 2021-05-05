@@ -101,7 +101,9 @@ namespace Destructible2D.Examples
 					{
 						// Grab extra finger data and position
 						var link     = D2dInputManager.Link.FindOrCreate(ref links, finger);
-						var position = D2dHelper.ScreenToWorldPosition(finger.PositionA, Intercept, camera);
+						//var position = D2dHelper.ScreenToWorldPosition(finger.PositionA, Intercept, camera);
+						//var position = D2dHelper.ScreenToWorldPosition(GameObject.Find("gun").transform.position, Intercept, camera);
+						var position = GameObject.Find("gun").transform.position;
 
 						// Create indiactor?
 						if (finger.Down == true)
