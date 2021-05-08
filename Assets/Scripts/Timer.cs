@@ -6,10 +6,19 @@ using UnityEngine.UI;
 public class Timer : MonoBehaviour
 {
     public GameObject textDisplay;
-    public int secondsLeft = 15;
+    public int secondsLeft = 11;
     public bool takingAway = false;
 
+    public static Timer instance;
 
+    void Awake()
+    {
+        if (instance != null)
+        {
+            return;
+        }
+        instance = this;
+    }
 
     // Start is called before the first frame update
     void Start()
@@ -23,6 +32,12 @@ public class Timer : MonoBehaviour
         if (takingAway == false && secondsLeft > 0)
         {
             StartCoroutine(TimerTake());
+        }
+        if(secondsLeft == 0) 
+        {
+            
+            RoundManager.singleton.NextWorm();
+            
         }
         
     }
@@ -43,4 +58,7 @@ public class Timer : MonoBehaviour
         }
         takingAway = false;
     }
+
+
+
 }

@@ -12,6 +12,14 @@ public class PlayerMovement : MonoBehaviour
     public CharacterController2D controller;
     public Animator animator;
 
+    public bool IsTurn { get { return RoundManager.singleton.IsMyTurn(wormId); } }
+
+    public int wormId;
+
+    public string teamColor;
+
+    private Animation anim;
+
 
     private float health;
     public float maxHealth = 100;
@@ -44,27 +52,50 @@ public class PlayerMovement : MonoBehaviour
     void Awake()
     {
         Cursor.visible = false;
+        crosshair.SetActive(false);
     }
 
     // Start is called before the first frame update
     void Start()
     {
+
+        anim = gameObject.GetComponent<Animation>();
+
         health = maxHealth;
-        frontHealthBar.color = Color.blue;
-        playerHealth.color = Color.blue;
+        if (teamColor == "blue")
+        {
+            frontHealthBar.color = Color.blue;
+            playerHealth.color = Color.blue;
+        }
+        else if (teamColor == "yellow")
+        {
+            playerHealth.color = Color.yellow;
+        }
+        
     }
 
     // Update is called once per frame
     void Update()
     {
+        UpdateHealthUI();
+        if (!IsTurn)
+        { 
+          anim.Stop("Moving_Animation");
+          anim.Play("Idle_Animation"); 
+          crosshair.SetActive(false);
+          return; 
+        }
+
+        //animator.SetBool("IsTime", false);
         if (Input.GetButtonDown("Inventory"))
         {
+            crosshair.SetActive(false);
             inventoryUI.SetActive(!inventoryUI.activeSelf);
             if (inventoryUI.activeSelf)
             {
                 Cursor.visible = true;
             }
-            else { Cursor.visible = false; }
+            else { Cursor.visible = false; crosshair.SetActive(true); }
         }
 
         if (EventSystem.current.IsPointerOverGameObject())
@@ -74,7 +105,7 @@ public class PlayerMovement : MonoBehaviour
 
 
         health = Mathf.Clamp(health, 0, maxHealth);
-        UpdateHealthUI();
+        //UpdateHealthUI();
 
         if (Input.GetKeyDown(KeyCode.A))
         {
@@ -101,17 +132,21 @@ public class PlayerMovement : MonoBehaviour
 
         if (Input.GetButtonDown("Jump"))
         {
+            
             jump = true;
             animator.SetBool("IsJumping", true);
         }
         if (movingDone) 
-        { 
+        {
+            crosshair.SetActive(true);
             RotateGun();
             Aim();
+            
         }
 
         if (horizontalMove == 0)
         {
+            
             currentGun.gameObject.SetActive(true);
 
             if (Input.GetKeyDown(KeyCode.Q))
@@ -122,6 +157,7 @@ public class PlayerMovement : MonoBehaviour
 
                 p.AddForce(-currentGun.right * misileForce, ForceMode2D.Impulse);
 
+                if (IsTurn) RoundManager.singleton.NextWorm();
                 //if (IsTurn) WormyManager.singleton.NextWorm();
             }
         }
@@ -181,7 +217,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void SetCrosshairPosition(float aimAngle)
     {
-
+        
         var x = transform.position.x + crossHairDistance * Mathf.Cos(aimAngle);
         var y = transform.position.y + crossHairDistance * Mathf.Sin(aimAngle);
 
