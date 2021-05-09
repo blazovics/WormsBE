@@ -46,10 +46,6 @@ public class PlayerMovement : MonoBehaviour
             jump = true;
             animator.SetBool("IsJumping", true);
         }
-        if (movingDone) 
-        { 
-            RotateGun(); 
-        }
 
         if (horizontalMove == 0)
         {
@@ -89,15 +85,6 @@ public class PlayerMovement : MonoBehaviour
             jump = false;
             movingDone = true;
         }
-    }
-
-    void RotateGun()
-    {
-        var diff = Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position;
-        diff.Normalize();
-
-        float rot_z = Mathf.Atan2(diff.y, diff.x) * Mathf.Rad2Deg;
-        currentGun.rotation = Quaternion.Euler(0f, 0f, rot_z + 180);
     }
 
 }
