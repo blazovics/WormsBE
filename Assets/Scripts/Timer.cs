@@ -6,8 +6,10 @@ using UnityEngine.UI;
 public class Timer : MonoBehaviour
 {
     public GameObject textDisplay;
-    public int secondsLeft = 11;
+    public int secondsLeft = 10;
     public bool takingAway = false;
+    public GameObject inventoryUI1;
+    public GameObject inventoryUI2;
 
     public static Timer instance;
 
@@ -35,7 +37,16 @@ public class Timer : MonoBehaviour
         }
         if(secondsLeft == 0) 
         {
-            
+            if (inventoryUI1.activeSelf) 
+            {
+                inventoryUI1.SetActive(false);
+                Cursor.visible = false;
+            }
+            if (inventoryUI2.activeSelf)
+            {
+                inventoryUI2.SetActive(false);
+                Cursor.visible = false;
+            }
             RoundManager.singleton.NextWorm();
             
         }

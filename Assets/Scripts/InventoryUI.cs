@@ -12,7 +12,7 @@ public class InventoryUI : MonoBehaviour
     InventorySlot[] slotsBlue;
 
 
-    InventorySlot[] slotsOrange;
+    InventorySlot[] slotsYellow;
 
     // Start is called before the first frame update
     void Start()
@@ -25,7 +25,7 @@ public class InventoryUI : MonoBehaviour
 
         slotsBlue = itemsparentT1.GetComponentsInChildren<InventorySlot>();
 
-        slotsOrange = itemsparentT2.GetComponentsInChildren<InventorySlot>();
+        slotsYellow = itemsparentT2.GetComponentsInChildren<InventorySlot>();
     }
 
     // Update is called once per frame
@@ -51,15 +51,15 @@ public class InventoryUI : MonoBehaviour
 
     void UpdateT2UI()
     {
-        for (int i = 0; i < slotsOrange.Length; i++)
+        for (int i = 0; i < slotsYellow.Length; i++)
         {
             if (i < inventoryT2.items.Count)
             {
-                slotsBlue[i].AddItem(inventoryT2.items[i]);
+                slotsYellow[i].AddItem(inventoryT2.items[i]);
             }
             else
             {
-                slotsOrange[i].DisableSlot();
+                slotsYellow[i].DisableSlot();
             }
         }
     }
