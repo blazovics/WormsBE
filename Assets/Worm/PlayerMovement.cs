@@ -20,7 +20,7 @@ public class PlayerMovement : MonoBehaviour
 
     public string teamColor;
 
-
+    public GameObject gun;
 
     public float health;
     public float maxHealth = 100;
@@ -48,13 +48,14 @@ public class PlayerMovement : MonoBehaviour
     void Awake()
     {
         Cursor.visible = false;
+        
     }
 
     // Start is called before the first frame update
     void Start()
     {
 
-
+        
         health = maxHealth;
         if (teamColor == "blue")
         {            
@@ -77,12 +78,18 @@ public class PlayerMovement : MonoBehaviour
             runSpeed = 0;
             animator.SetBool("IsTime", true);
             animator.SetFloat("Speed", 0);
+            if (gun != null) 
+            {
+                gun.SetActive(false);
+                gun = null;
+            }
+            
 
             crosshair.SetActive(false);
           return; 
         }
 
-        
+
         runSpeed = 0.8f;
         animator.SetBool("IsTime", false);
 
@@ -262,4 +269,5 @@ public class PlayerMovement : MonoBehaviour
         playerHealth.text = health.ToString();
     }
 
+    
 }

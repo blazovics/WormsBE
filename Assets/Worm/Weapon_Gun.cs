@@ -1,11 +1,17 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.UI;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class Weapon_Gun : MonoBehaviour
 {
     public GameObject projectile;
     public Transform shotPoint;
+
+    public string teamColor;
+
+    public Sprite icon;
 
     public float offset;
 
@@ -28,6 +34,10 @@ public class Weapon_Gun : MonoBehaviour
 
         if (canFire == true)
         {
+            if (EventSystem.current.IsPointerOverGameObject())
+            {
+                return;
+            }
             if (Input.GetMouseButtonDown(0))
             {
                 Instantiate(projectile, shotPoint.position, transform.rotation);

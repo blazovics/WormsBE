@@ -7,9 +7,16 @@ using TMPro;
 public class RoundManager : MonoBehaviour
 {
     public PlayerMovement[] worms;
-    public  List<PlayerMovement> teamYellow = new List<PlayerMovement>();
+    public List<PlayerMovement> teamYellow = new List<PlayerMovement>();
     public List<PlayerMovement> teamBlue = new List<PlayerMovement>();
     public Transform wormCamera;
+
+    public Weapon_Gun[] weapons;
+
+    //public GameObject gameManager;
+
+    InventoryT1 inventoryT1;
+    InventoryT2 inventoryT2;
 
     public float lerpTimer;
     public float chipSpeed = 2f;
@@ -32,8 +39,9 @@ public class RoundManager : MonoBehaviour
 
     private int currentWorm;
 
-    private int helper = 0;
+    public int helper = 0;
 
+    private bool isLoaded = false; 
 
 
     void Start()
@@ -45,7 +53,6 @@ public class RoundManager : MonoBehaviour
         }
 
         singleton = this;
-
 
         worms = GameObject.FindObjectsOfType<PlayerMovement>();
         wormCamera = Camera.main.transform;
@@ -63,28 +70,43 @@ public class RoundManager : MonoBehaviour
             }
         }
 
-
-        for (int t = 0; t < worms.Length; t = t+2)
+        for (int t = 0; t < worms.Length; t = t + 2)
         {
-            
+
             worms[t] = teamBlue[helper];
             worms[t].wormId = t;
-            worms[t+1] = teamYellow[helper];
-            worms[t+1].wormId = t+1;
+            worms[t + 1] = teamYellow[helper];
+            worms[t + 1].wormId = t + 1;
             helper++;
         }
 
         frontHealthBarBlue.color = Color.blue;
         frontHealthBarYellow.color = Color.yellow;
 
+        inventoryT1 = InventoryT1.instance;
+        inventoryT2 = InventoryT2.instance;
+
+        weapons = GameObject.FindObjectsOfType<Weapon_Gun>();
 
     }
 
+
+
     void Update()
     {
+        if (!isLoaded)
+        {
+            for (int i = 0; i < weapons.Length; i++)
+            {
+                inventoryT1.add(weapons[i]);
+                inventoryT2.add(weapons[i]);
+                weapons[i].gameObject.SetActive(false);
+            }
+            isLoaded = true;
+        }
         UpdateHealthUIBlue();
         UpdateHealthUIYellow();
-        
+
     }
 
 

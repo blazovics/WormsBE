@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class InventoryT2 : MonoBehaviour
 {
-    public List<GameObject> items = new List<GameObject>();
+    public List<Weapon_Gun> items = new List<Weapon_Gun>();
 
     public static InventoryT2 instance;
 
@@ -21,7 +21,7 @@ public class InventoryT2 : MonoBehaviour
 
     public OnItemChanged onItemChangedCallback;
 
-    public void add(GameObject item)
+    public void add(Weapon_Gun item)
     {
         items.Add(item);
 
