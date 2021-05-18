@@ -17,6 +17,10 @@ public class Weapon_Gun : MonoBehaviour
 
     private bool canFire;
 
+    public bool isSG;
+    public bool isFL;
+    public bool isBB;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -34,13 +38,53 @@ public class Weapon_Gun : MonoBehaviour
 
         if (canFire == true)
         {
-            if (EventSystem.current.IsPointerOverGameObject())
+            if (isSG == false && isFL == false && isBB == false)
             {
-                return;
+                if (EventSystem.current.IsPointerOverGameObject())
+                {
+                    return;
+                }
+                if (Input.GetMouseButtonDown(0))
+                {
+                    Instantiate(projectile, shotPoint.position, transform.rotation);
+                }
             }
-            if (Input.GetMouseButtonDown(0))
+            else if (isSG == true)
             {
-                Instantiate(projectile, shotPoint.position, transform.rotation);
+                if (EventSystem.current.IsPointerOverGameObject())
+                {
+                    return;
+                }
+                if (Input.GetMouseButtonDown(0))
+                {
+                    Instantiate(projectile, shotPoint.position, transform.rotation);
+                    Instantiate(projectile, shotPoint.position, Quaternion.Euler(0f, 0f, rot_z + offset + Random.Range(-7.0f, 7.0f)));
+                    Instantiate(projectile, shotPoint.position, Quaternion.Euler(0f, 0f, rot_z + offset + Random.Range(-7.0f, 7.0f)));
+                    Instantiate(projectile, shotPoint.position, Quaternion.Euler(0f, 0f, rot_z + offset + Random.Range(-7.0f, 7.0f)));
+                    Instantiate(projectile, shotPoint.position, Quaternion.Euler(0f, 0f, rot_z + offset + Random.Range(-7.0f, 7.0f)));
+                    Instantiate(projectile, shotPoint.position, Quaternion.Euler(0f, 0f, rot_z + offset + Random.Range(-7.0f, 7.0f)));
+                }
+            }
+            else if (isFL == true)
+            {
+                if (EventSystem.current.IsPointerOverGameObject())
+                {
+                    return;
+                }
+                if (Input.GetMouseButtonDown(0))
+                {
+                    Instantiate(projectile, shotPoint.position, transform.rotation);
+                }
+            }else if (isBB == true)
+            {
+                if (EventSystem.current.IsPointerOverGameObject())
+                {
+                    return;
+                }
+                if (Input.GetMouseButtonDown(0))
+                {
+
+                }
             }
         }
 

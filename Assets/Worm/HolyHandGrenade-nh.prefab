@@ -10,9 +10,12 @@ GameObject:
   m_Component:
   - component: {fileID: 8087187090826671972}
   - component: {fileID: 7157447840069292450}
-  - component: {fileID: 1061195424430151125}
+  - component: {fileID: -6402506676404323476}
   - component: {fileID: 1554502306130519844}
   - component: {fileID: -6529495186813433246}
+  - component: {fileID: -7042643546073851101}
+  - component: {fileID: -8846588051643964096}
+  - component: {fileID: 5895049214869317654}
   m_Layer: 0
   m_Name: HolyHandGrenade-nh
   m_TagString: Untagged
@@ -85,7 +88,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &1061195424430151125
+--- !u!114 &-6402506676404323476
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -94,10 +97,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 7793338122731170943}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 16cd78ee9176f3f458a5cfc975a7d536, type: 3}
+  m_Script: {fileID: 11500000, guid: fc94df5e16f4ce04788d15dce5ab8000, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  launchForce: 4
+  speed: 5
   lifeTime: 5
 --- !u!50 &1554502306130519844
 Rigidbody2D:
@@ -136,3 +139,74 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.4
+--- !u!114 &-7042643546073851101
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7793338122731170943}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6f4bbf9abb895c248917caccbfc6043a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &-8846588051643964096
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7793338122731170943}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0b06713989bf4974eb4c04152bdaa60d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  threshold: 1
+  delay: 3
+  prefab: {fileID: 100000, guid: 092aeef3857c50f41ada30e877c781cd, type: 3}
+  offset: 0.1
+  rotateTo: 0
+  onImpact:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 5895049214869317654}
+        m_TargetAssemblyTypeName: UnityEngine.Behaviour, UnityEngine
+        m_MethodName: set_enabled
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+  cooldown: 0
+--- !u!114 &5895049214869317654
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7793338122731170943}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 33fbcb04c243139438f8b0b3f28d0e81, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  life: 0
+  target: {fileID: 0}
+  fade: 0
+  fadeDuration: 1
+  shrink: 0
+  shrinkDuration: 1
+  randomizeOnEnable: 0
+  lifeMin: 0.5
+  lifeMax: 1
+  startColor: {r: 0, g: 0, b: 0, a: 0}
+  startLocalScale: {x: 0, y: 0, z: 0}
