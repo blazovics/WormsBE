@@ -17,6 +17,8 @@ public class Weapon_Gun : MonoBehaviour
 
     private bool canFire;
 
+    Vector3 temp;
+
     public bool isSG;
     public bool isFL;
     public bool isBB;
@@ -71,7 +73,7 @@ public class Weapon_Gun : MonoBehaviour
                 {
                     return;
                 }
-                if (Input.GetMouseButtonDown(0))
+                if (Input.GetMouseButton(0))
                 {
                     Instantiate(projectile, shotPoint.position, transform.rotation);
                 }
@@ -83,7 +85,9 @@ public class Weapon_Gun : MonoBehaviour
                 }
                 if (Input.GetMouseButtonDown(0))
                 {
-
+                    temp = transform.localScale;
+                    temp.x *= -1;
+                    transform.localScale = temp;
                 }
             }
         }

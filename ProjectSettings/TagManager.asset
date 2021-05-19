@@ -5,6 +5,7 @@ TagManager:
   serializedVersion: 2
   tags:
   - Explosion
+  - Worm
   layers:
   - Default
   - TransparentFX
@@ -17,8 +18,8 @@ TagManager:
   - MouseTarget
   - Crosshair
   - Weapon
-  - 
-  - 
+  - Fire
+  - Worm
   - 
   - 
   - 
