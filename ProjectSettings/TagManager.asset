@@ -5,6 +5,8 @@ TagManager:
   serializedVersion: 2
   tags:
   - Explosion
+  - Worm
+  - Rocket
   layers:
   - Default
   - TransparentFX
@@ -16,9 +18,9 @@ TagManager:
   - 
   - MouseTarget
   - Crosshair
-  - 
-  - 
-  - 
+  - Weapon
+  - Fire
+  - Worm
   - 
   - 
   - 
@@ -47,4 +49,7 @@ TagManager:
     locked: 0
   - name: Crosshair
     uniqueID: 3142354537
+    locked: 0
+  - name: Weapon
+    uniqueID: 186398525
     locked: 0

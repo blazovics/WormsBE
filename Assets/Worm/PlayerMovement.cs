@@ -12,14 +12,18 @@ public class PlayerMovement : MonoBehaviour
     public CharacterController2D controller;
     public Animator animator;
 
+    public bool IsTurn { get { return RoundManager.singleton.IsMyTurn(wormId); } }
 
-    private float health;
+    public int wormId;
+
+    public GameObject worm;
+
+    public string teamColor;
+
+    public GameObject gun;
+
+    public float health;
     public float maxHealth = 100;
-    private float lerpTimer;
-    public float chipSpeed = 2f;
-    public Image frontHealthBar;
-    public Image backHealthBar;
-    public TextMeshProUGUI healthText;
     public Text playerHealth;
 
     public Rigidbody2D rb;
@@ -30,7 +34,7 @@ public class PlayerMovement : MonoBehaviour
 
     public float crossHairDistance = 0.1f;
 
-    public float runSpeed = 40f;
+    public float runSpeed = 0.8f;
     public float misileForce = 5;
 
     float horizontalMove = 0f;
@@ -44,50 +48,78 @@ public class PlayerMovement : MonoBehaviour
     void Awake()
     {
         Cursor.visible = false;
+        
     }
 
     // Start is called before the first frame update
     void Start()
     {
+
+        
         health = maxHealth;
-        frontHealthBar.color = Color.blue;
-        playerHealth.color = Color.blue;
+        if (teamColor == "blue")
+        {            
+            playerHealth.color = Color.blue;
+        }
+        else if (teamColor == "yellow")
+        {
+            playerHealth.color = Color.yellow;
+        }
+        playerHealth.text = health.ToString();
+
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (!IsTurn)
+        {
+            horizontalMove = 0f;
+            runSpeed = 0;
+            animator.SetBool("IsTime", true);
+            animator.SetFloat("Speed", 0);
+            if (gun != null) 
+            {
+                gun.SetActive(false);
+                gun = null;
+            }
+            
+
+            crosshair.SetActive(false);
+          return; 
+        }
+
+
+        runSpeed = 0.8f;
+        animator.SetBool("IsTime", false);
+
         if (Input.GetButtonDown("Inventory"))
         {
             inventoryUI.SetActive(!inventoryUI.activeSelf);
             if (inventoryUI.activeSelf)
             {
+                crosshair.SetActive(false);
                 Cursor.visible = true;
             }
-            else { Cursor.visible = false; }
+            else { Cursor.visible = false; crosshair.SetActive(true); }
         }
 
         if (EventSystem.current.IsPointerOverGameObject())
         {
             return;
         }
+  
 
-
-        health = Mathf.Clamp(health, 0, maxHealth);
-        UpdateHealthUI();
-
-        if (Input.GetKeyDown(KeyCode.A))
+        if (Input.GetKeyDown(KeyCode.X))
         {
             TakeDamage(Random.Range(5, 10));
         }
-        if (Input.GetKeyDown(KeyCode.S))
+        if (Input.GetKeyDown(KeyCode.C))
         {
             RestoreHealth(Random.Range(5, 10));
         }
 
-
-        /*if (!IsTurn)
-            return;*/
+        
         targetTime -= Time.deltaTime;
 
         if (targetTime <= 0.0f)
@@ -101,17 +133,28 @@ public class PlayerMovement : MonoBehaviour
 
         if (Input.GetButtonDown("Jump"))
         {
+            
             jump = true;
             animator.SetBool("IsJumping", true);
         }
         if (movingDone) 
-        { 
+        {
             RotateGun();
             Aim();
+            
         }
 
         if (horizontalMove == 0)
         {
+            animator.SetFloat("Speed", 0);
+            animator.SetBool("IsTime", true);
+
+            if (inventoryUI.activeSelf)
+            {
+                crosshair.SetActive(false);
+                
+            }
+            else { crosshair.SetActive(true); }
             currentGun.gameObject.SetActive(true);
 
             if (Input.GetKeyDown(KeyCode.Q))
@@ -122,14 +165,25 @@ public class PlayerMovement : MonoBehaviour
 
                 p.AddForce(-currentGun.right * misileForce, ForceMode2D.Impulse);
 
-                //if (IsTurn) WormyManager.singleton.NextWorm();
+                if (IsTurn) 
+                {
+                    Cursor.visible = false;
+                    inventoryUI.SetActive(false);
+                    Timer.instance.secondsLeft = 0;
+                     
+                }
+                
             }
         }
         else
         {
+            
+            crosshair.SetActive(false);
             currentGun.gameObject.SetActive(false);
             transform.position += Vector3.right * horizontalMove *Time.deltaTime * runSpeed;
         }
+
+
 
     }
 
@@ -181,7 +235,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void SetCrosshairPosition(float aimAngle)
     {
-
+        
         var x = transform.position.x + crossHairDistance * Mathf.Cos(aimAngle);
         var y = transform.position.y + crossHairDistance * Mathf.Sin(aimAngle);
 
@@ -190,46 +244,32 @@ public class PlayerMovement : MonoBehaviour
     }
 
 
-    public void UpdateHealthUI()
-    {
-
-        float fillF = frontHealthBar.fillAmount;
-        float fillB = backHealthBar.fillAmount;
-        float hFraction = health / maxHealth;
-        if (fillB > hFraction)
-        {
-
-            frontHealthBar.fillAmount = hFraction;
-            backHealthBar.color = Color.red;
-            lerpTimer += Time.deltaTime;
-            float percentComplete = lerpTimer / chipSpeed;
-            percentComplete = percentComplete * percentComplete;
-            backHealthBar.fillAmount = Mathf.Lerp(fillB, hFraction, percentComplete);
-        }
-        if (fillF < hFraction)
-        {
-            backHealthBar.color = Color.green;
-            backHealthBar.fillAmount = hFraction;
-            lerpTimer += Time.deltaTime;
-            float percentComplete = lerpTimer / chipSpeed;
-            percentComplete = percentComplete * percentComplete;
-            frontHealthBar.fillAmount = Mathf.Lerp(fillF, backHealthBar.fillAmount, percentComplete);
-        }
-        healthText.text = Mathf.Round(health * 100 / maxHealth) + "%";
-        playerHealth.text = health.ToString();
-    }
-
     public void TakeDamage(float damage)
     {
 
         health -= damage;
-        lerpTimer = 0f;
+        RoundManager.singleton.lerpTimer = 0f;
+        if (health <= 0) 
+        {
+            health = 0;
+            worm.SetActive(false);
+            Timer.instance.secondsLeft = 0;
+        }
+        playerHealth.text = health.ToString();
+
+
     }
 
     public void RestoreHealth(float healAmount)
     {
         health += healAmount;
-        lerpTimer = 0f;
+        RoundManager.singleton.lerpTimer = 0f;
+        if (health > maxHealth)
+        {
+            health = maxHealth;
+        }
+        playerHealth.text = health.ToString();
     }
 
+    
 }

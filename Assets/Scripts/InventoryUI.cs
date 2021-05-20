@@ -6,13 +6,15 @@ public class InventoryUI : MonoBehaviour
 
     public Transform itemsparentT2;
 
+    public GameObject gameManager;
+
     InventoryT1 inventoryT1;
     InventoryT2 inventoryT2;
 
     InventorySlot[] slotsBlue;
 
 
-    InventorySlot[] slotsOrange;
+    InventorySlot[] slotsYellow;
 
     // Start is called before the first frame update
     void Start()
@@ -23,9 +25,9 @@ public class InventoryUI : MonoBehaviour
         inventoryT1.onItemChangedCallback += UpdateT1UI;
         inventoryT2.onItemChangedCallback += UpdateT2UI;
 
-        slotsBlue = itemsparentT1.GetComponentsInChildren<InventorySlot>();
+        slotsBlue = itemsparentT2.GetComponentsInChildren<InventorySlot>();
 
-        slotsOrange = itemsparentT2.GetComponentsInChildren<InventorySlot>();
+        slotsYellow = itemsparentT1.GetComponentsInChildren<InventorySlot>();
     }
 
     // Update is called once per frame
@@ -34,13 +36,14 @@ public class InventoryUI : MonoBehaviour
         
     }
 
-    void UpdateT1UI()
+    public void UpdateT2UI()
     {
+
         for (int i = 0; i < slotsBlue.Length; i++)
         {
-            if (i < inventoryT1.items.Count)
+            if (i < inventoryT2.items.Count)
             {
-                slotsBlue[i].AddItem(inventoryT1.items[i]);
+                slotsBlue[i].AddItem(inventoryT2.items[i]);
             }
             else
             {
@@ -49,17 +52,17 @@ public class InventoryUI : MonoBehaviour
         }
     }
 
-    void UpdateT2UI()
+    void UpdateT1UI()
     {
-        for (int i = 0; i < slotsOrange.Length; i++)
+        for (int i = 0; i < slotsYellow.Length; i++)
         {
-            if (i < inventoryT2.items.Count)
+            if (i < inventoryT1.items.Count)
             {
-                slotsBlue[i].AddItem(inventoryT2.items[i]);
+                slotsYellow[i].AddItem(inventoryT1.items[i]);
             }
             else
             {
-                slotsOrange[i].DisableSlot();
+                slotsYellow[i].DisableSlot();
             }
         }
     }

@@ -1,10 +1,11 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class InventoryT1 : MonoBehaviour
 {
-    public List<GameObject> items = new List<GameObject>();
+    public List<Weapon_Gun> items = new List<Weapon_Gun>();
 
     public static InventoryT1 instance;
 
@@ -15,20 +16,25 @@ public class InventoryT1 : MonoBehaviour
             return;
         }
         instance = this;
+
+        
     }
 
     public delegate void OnItemChanged();
 
     public OnItemChanged onItemChangedCallback;
 
-    public void add(GameObject item)
+    public void add(Weapon_Gun item)
     {
         items.Add(item);
 
+
         if (onItemChangedCallback != null)
         {
+            
             onItemChangedCallback.Invoke();
         }
+      
 
     }
 
