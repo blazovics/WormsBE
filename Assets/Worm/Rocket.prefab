@@ -15,10 +15,11 @@ GameObject:
   - component: {fileID: -3136196463350538029}
   - component: {fileID: -4397396250585718182}
   - component: {fileID: 2908008599282842551}
+  - component: {fileID: -920196795568685014}
   - component: {fileID: -2054123540944278821}
   m_Layer: 0
   m_Name: Rocket
-  m_TagString: Untagged
+  m_TagString: Rocket
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -102,6 +103,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 15
   lifeTime: 5
+  damage: 0
+  isFL: 0
 --- !u!50 &5722382144451353713
 Rigidbody2D:
   serializedVersion: 4
@@ -187,6 +190,20 @@ MonoBehaviour:
           m_BoolArgument: 1
         m_CallState: 2
   cooldown: 0
+--- !u!114 &-920196795568685014
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7574756365693673308}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b362d53fa3d6f7440aa3686a13ba8cbe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damage: 35
+  worms: []
 --- !u!114 &-2054123540944278821
 MonoBehaviour:
   m_ObjectHideFlags: 0

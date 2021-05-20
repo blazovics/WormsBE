@@ -183,6 +183,8 @@ public class PlayerMovement : MonoBehaviour
             transform.position += Vector3.right * horizontalMove *Time.deltaTime * runSpeed;
         }
 
+
+
     }
 
     public void OnLanding()

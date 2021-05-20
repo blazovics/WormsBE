@@ -10,7 +10,6 @@ public class Projectile : MonoBehaviour
 
     public bool isFL;
 
-    public LayerMask whatIsSolid;
 
     // Start is called before the first frame update
     void Start()
@@ -22,6 +21,9 @@ public class Projectile : MonoBehaviour
     void Update()
     {
         transform.Translate(Vector2.up * speed * Time.deltaTime);
+
+
+
 
         if (isFL == true)
         {

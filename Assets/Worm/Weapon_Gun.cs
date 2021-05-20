@@ -21,7 +21,6 @@ public class Weapon_Gun : MonoBehaviour
 
     public bool isSG;
     public bool isFL;
-    public bool isBB;
 
     // Start is called before the first frame update
     void Start()
@@ -40,7 +39,7 @@ public class Weapon_Gun : MonoBehaviour
 
         if (canFire == true)
         {
-            if (isSG == false && isFL == false && isBB == false)
+            if (isSG == false && isFL == false)
             {
                 if (EventSystem.current.IsPointerOverGameObject())
                 {
@@ -49,6 +48,7 @@ public class Weapon_Gun : MonoBehaviour
                 if (Input.GetMouseButtonDown(0))
                 {
                     Instantiate(projectile, shotPoint.position, transform.rotation);
+                    RoundManager.singleton.NextWorm();
                 }
             }
             else if (isSG == true)
@@ -65,6 +65,7 @@ public class Weapon_Gun : MonoBehaviour
                     Instantiate(projectile, shotPoint.position, Quaternion.Euler(0f, 0f, rot_z + offset + Random.Range(-7.0f, 7.0f)));
                     Instantiate(projectile, shotPoint.position, Quaternion.Euler(0f, 0f, rot_z + offset + Random.Range(-7.0f, 7.0f)));
                     Instantiate(projectile, shotPoint.position, Quaternion.Euler(0f, 0f, rot_z + offset + Random.Range(-7.0f, 7.0f)));
+                    RoundManager.singleton.NextWorm();
                 }
             }
             else if (isFL == true)
@@ -76,18 +77,6 @@ public class Weapon_Gun : MonoBehaviour
                 if (Input.GetMouseButton(0))
                 {
                     Instantiate(projectile, shotPoint.position, transform.rotation);
-                }
-            }else if (isBB == true)
-            {
-                if (EventSystem.current.IsPointerOverGameObject())
-                {
-                    return;
-                }
-                if (Input.GetMouseButtonDown(0))
-                {
-                    temp = transform.localScale;
-                    temp.x *= -1;
-                    transform.localScale = temp;
                 }
             }
         }

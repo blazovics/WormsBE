@@ -12,7 +12,9 @@ GameObject:
   - component: {fileID: 2503772621962831639}
   - component: {fileID: -4220593468060255394}
   - component: {fileID: 6840680848088722215}
+  - component: {fileID: -8064800170004830548}
   - component: {fileID: 4956742042308535639}
+  - component: {fileID: 217635771571737846}
   m_Layer: 11
   m_Name: Fire
   m_TagString: Untagged
@@ -101,9 +103,6 @@ MonoBehaviour:
   lifeTime: 5
   damage: 15
   isFL: 1
-  whatIsSolid:
-    serializedVersion: 2
-    m_Bits: 0
 --- !u!50 &6840680848088722215
 Rigidbody2D:
   serializedVersion: 4
@@ -125,6 +124,20 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 0
+--- !u!114 &-8064800170004830548
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3637626876372970029}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b362d53fa3d6f7440aa3686a13ba8cbe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damage: 20
+  worms: []
 --- !u!58 &4956742042308535639
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -141,3 +154,17 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 1.5
+--- !u!114 &217635771571737846
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3637626876372970029}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b362d53fa3d6f7440aa3686a13ba8cbe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damage: 0
+  worms: []

@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 728470568314907687}
   - component: {fileID: 4201133253246638898}
+  - component: {fileID: -7976825784111493858}
   - component: {fileID: -420666372468696786}
   - component: {fileID: 6769820060514346999}
   - component: {fileID: 2064171155784323975}
@@ -88,6 +89,20 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &-7976825784111493858
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3025239933252092518}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b362d53fa3d6f7440aa3686a13ba8cbe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damage: 10
+  worms: []
 --- !u!114 &-420666372468696786
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -100,8 +115,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc94df5e16f4ce04788d15dce5ab8000, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 15
+  speed: 10
   lifeTime: 0.2
+  damage: 0
+  isFL: 0
 --- !u!58 &6769820060514346999
 CircleCollider2D:
   m_ObjectHideFlags: 0
