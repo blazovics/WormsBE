@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class RoundManager : MonoBehaviour
 {
@@ -41,7 +42,11 @@ public class RoundManager : MonoBehaviour
 
     public int helper = 0;
 
-    private bool isLoaded = false; 
+    private bool isLoaded = false;
+
+    public static string winner;
+
+    
 
 
     void Start()
@@ -106,7 +111,19 @@ public class RoundManager : MonoBehaviour
         }
         UpdateHealthUIBlue();
         UpdateHealthUIYellow();
+        if(healthTeamBlue == 0)
+        {
+            SaveWinner.winner = "Yellow";
+            Cursor.visible = true;
+            SceneManager.LoadScene("GameOver");
 
+        }
+        else if(healthTeamYellow == 0)
+        {
+            SaveWinner.winner = "Blue";
+            Cursor.visible = true;
+            SceneManager.LoadScene("GameOver");
+        }
     }
 
 
@@ -221,4 +238,16 @@ public class RoundManager : MonoBehaviour
         healthTextYellow.text = Mathf.Round(healthTeamYellow * 100 / maxHealth) + "%";
 
     }
+
+    public void OnRestartPress()
+    {
+        SceneManager.LoadScene("SampleScene");
+    }
+
+    public void OnQuitPress()
+    {
+        Application.Quit();
+
+    }
+
 }

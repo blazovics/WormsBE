@@ -7,7 +7,7 @@ using TMPro;
 
 public class PlayerMovement : MonoBehaviour
 {
-    public Rigidbody2D bulletPrefab;
+    //public Rigidbody2D bulletPrefab;
     public Transform currentGun;
     public CharacterController2D controller;
     public Animator animator;
@@ -109,17 +109,7 @@ public class PlayerMovement : MonoBehaviour
             return;
         }
   
-
-        if (Input.GetKeyDown(KeyCode.X))
-        {
-            TakeDamage(Random.Range(5, 10));
-        }
-        if (Input.GetKeyDown(KeyCode.C))
-        {
-            RestoreHealth(Random.Range(5, 10));
-        }
-
-        
+                
         targetTime -= Time.deltaTime;
 
         if (targetTime <= 0.0f)
@@ -156,24 +146,18 @@ public class PlayerMovement : MonoBehaviour
             }
             else { crosshair.SetActive(true); }
             currentGun.gameObject.SetActive(true);
-
-            if (Input.GetKeyDown(KeyCode.Q))
+            /*if (Input.GetMouseButtonDown(0))
             {
-                var p = Instantiate(bulletPrefab,
-                                   currentGun.position - currentGun.right,
-                                   currentGun.rotation);
-
-                p.AddForce(-currentGun.right * misileForce, ForceMode2D.Impulse);
-
-                if (IsTurn) 
-                {
+             
                     Cursor.visible = false;
                     inventoryUI.SetActive(false);
                     Timer.instance.secondsLeft = 0;
-                     
-                }
+
                 
-            }
+            }*/
+
+
+
         }
         else
         {
@@ -259,7 +243,7 @@ public class PlayerMovement : MonoBehaviour
 
 
     }
-
+    /*
     public void RestoreHealth(float healAmount)
     {
         health += healAmount;
@@ -269,7 +253,7 @@ public class PlayerMovement : MonoBehaviour
             health = maxHealth;
         }
         playerHealth.text = health.ToString();
-    }
+    }*/
 
     
 }

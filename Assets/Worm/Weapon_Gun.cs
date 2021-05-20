@@ -65,6 +65,7 @@ public class Weapon_Gun : MonoBehaviour
                     Instantiate(projectile, shotPoint.position, Quaternion.Euler(0f, 0f, rot_z + offset + Random.Range(-7.0f, 7.0f)));
                     Instantiate(projectile, shotPoint.position, Quaternion.Euler(0f, 0f, rot_z + offset + Random.Range(-7.0f, 7.0f)));
                     Instantiate(projectile, shotPoint.position, Quaternion.Euler(0f, 0f, rot_z + offset + Random.Range(-7.0f, 7.0f)));
+
                     RoundManager.singleton.NextWorm();
                 }
             }

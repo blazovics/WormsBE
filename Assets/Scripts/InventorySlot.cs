@@ -20,7 +20,7 @@ public class InventorySlot : MonoBehaviour
         button.interactable = true;
 
         icon.sprite = item.icon;
-        //icon = item.icon;
+        
         icon.enabled = true;
 
     }
@@ -37,7 +37,7 @@ public class InventorySlot : MonoBehaviour
         {
             for (int i = 0; i < RoundManager.singleton.worms.Length; i++)
             {
-                Debug.Log("Not Using Item");
+                
                 if (RoundManager.singleton.IsMyTurn(RoundManager.singleton.worms[i].wormId))
                 {
                     if (RoundManager.singleton.worms[i].gun == null)
@@ -46,6 +46,8 @@ public class InventorySlot : MonoBehaviour
                         item.gameObject.transform.position = new Vector3(RoundManager.singleton.worms[i].gameObject.transform.position.x, RoundManager.singleton.worms[i].gameObject.transform.position.y - 0.15f, RoundManager.singleton.worms[i].gameObject.transform.position.z);
                         item.gameObject.transform.SetParent(RoundManager.singleton.worms[i].gameObject.transform);
                         RoundManager.singleton.worms[i].gun = item.gameObject;
+                        RoundManager.singleton.worms[i].inventoryUI.SetActive(false);
+                        Cursor.visible = false;
                     }
                     else
                     {
@@ -54,7 +56,8 @@ public class InventorySlot : MonoBehaviour
                         item.gameObject.transform.SetParent(RoundManager.singleton.worms[i].gameObject.transform);
                         RoundManager.singleton.worms[i].gun = item.gameObject;
                         RoundManager.singleton.worms[i].gun.SetActive(true);
-
+                        RoundManager.singleton.worms[i].inventoryUI.SetActive(false);
+                        Cursor.visible = false;
                     }
                     
 
